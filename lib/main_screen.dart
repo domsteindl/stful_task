@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stful_task/counter_card.dart';
 
-
-
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -11,7 +9,9 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int counter = 0;
+  
+List<int> counters = [0,0,0,0,0];
+  int  get sum => counters.reduce((value, element) => value + element);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,21 +20,32 @@ class _MainScreenState extends State<MainScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           spacing: 16,
           children: [
-            CounterCard(counter: counter, onIncrement: () => setState(() {
-              counter++;
-            }),),
-                     CounterCard(counter: counter, onIncrement: () => setState(() {
-              counter++;
-            }),),
-                   CounterCard(counter: counter, onIncrement: () => setState(() {
-              counter++;
-            }),),
-                   CounterCard(counter: counter, onIncrement: () => setState(() {
-              counter++;
-            }),),
-                CounterCard(counter: counter, onIncrement: () => setState(() {
-              counter++;
-            }),),
+            for(int i = 0; i < counters.length; i++) 
+              CounterCard(onCounterChanged: (value) {
+               setState(() {
+                 counters[i] = value;
+               }); 
+              },)
+            
+            /*
+            CounterCard(onCounterChanged: (value) => setState(() {
+              sum += value;
+            })),
+            CounterCard(onCounterChanged: (value) => setState(() {
+              sum += value;
+            })),
+            CounterCard(onCounterChanged: (value) => setState(() {
+              sum += value;
+            })),
+            CounterCard(onCounterChanged: (value) => setState(() {
+              sum += value;
+            })),
+            CounterCard(onCounterChanged: (value) => setState(() {
+              sum += value;
+            })),*/,
+            Text("Summe aller Zählerstände: $sum")
+
+            
           ],
         ),
       ),
