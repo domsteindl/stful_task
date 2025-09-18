@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class CounterCard extends StatefulWidget {
   final ValueChanged<int> onCounterChanged;
-  const CounterCard({super.key, required this.onCounterChanged});
+  final int resetVersion;
+  const CounterCard({super.key, required this.onCounterChanged, required this.resetVersion});
 
   @override
   State<CounterCard> createState() => _CounterCardState();
@@ -13,6 +14,16 @@ class _CounterCardState extends State<CounterCard> {
 
    int counter = 0;
 
+
+  @override
+  void didUpdateWidget(CounterCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.resetVersion != widget.resetVersion) {
+      setState(() {
+        counter = 0;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

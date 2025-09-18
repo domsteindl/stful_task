@@ -9,9 +9,17 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  
-List<int> counters = [0,0,0,0,0];
-  int  get sum => counters.reduce((value, element) => value + element);
+  void resetCounters() {
+    setState(() {
+      resetVersion++;
+      counters = List.filled(counters.length, 0);
+    });
+  }
+
+  int get sum => counters.reduce((value, element) => value + element);
+  int resetVersion = 0;
+  List<int> counters = [0, 0, 0, 0, 0];
+  //int  get sum => counters.reduce((value, element) => value + element);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,13 +28,16 @@ List<int> counters = [0,0,0,0,0];
           mainAxisAlignment: MainAxisAlignment.center,
           spacing: 16,
           children: [
-            for(int i = 0; i < counters.length; i++) 
-              CounterCard(onCounterChanged: (value) {
-               setState(() {
-                 counters[i] = value;
-               }); 
-              },)
-            
+            for (int i = 0; i < counters.length; i++)
+              CounterCard(
+                resetVersion: resetVersion,
+                onCounterChanged: (value) {
+                  setState(() {
+                    counters[i] = value;
+                  });
+                },
+              )
+
             /*
             CounterCard(onCounterChanged: (value) => setState(() {
               sum += value;
@@ -42,10 +53,11 @@ List<int> counters = [0,0,0,0,0];
             })),
             CounterCard(onCounterChanged: (value) => setState(() {
               sum += value;
-            })),*/,
-            Text("Summe aller Zählerstände: $sum")
-
-            
+            })),*/
+            ,
+            Text("Summe aller Zählerstände: $sum"),
+            OutlinedButton(
+                onPressed: resetCounters, child: Text("Reset Counters"))
           ],
         ),
       ),
