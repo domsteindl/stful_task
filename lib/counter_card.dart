@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 
 class CounterCard extends StatelessWidget {
-  const CounterCard({super.key});
+  final int counter;
+  final VoidCallback onIncrement;
+  const CounterCard({super.key, this.counter = 0, required this.onIncrement});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(5.0),
         child: Column(
           children: [
-            Text('Zähler: 0'),
+            Text('Zähler: $counter'),
             ElevatedButton(
-              onPressed: () {},
-              child: const Text('Click Me'),
+              onPressed: () {
+                onIncrement();
+              },
+              child: Text('Click Me'),
             ),
           ],
         ),
